@@ -4,9 +4,7 @@
       <h2 class="text-2xl font-bold text-center text-gray-800">Sign In</h2>
       <form @submit.prevent="handleSignIn" class="space-y-4">
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-600"
-            >Email</label
-          >
+          <label for="email" class="block text-sm font-medium text-gray-600">Email</label>
           <input
             id="email"
             v-model="email"
@@ -16,9 +14,7 @@
           />
         </div>
         <div>
-          <label for="password" class="block text-sm font-medium text-gray-600"
-            >Password</label
-          >
+          <label for="password" class="block text-sm font-medium text-gray-600">Password</label>
           <input
             id="password"
             v-model="password"
@@ -49,7 +45,7 @@ import { ref } from "vue";
 import { auth } from "../utils/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
-import { useUserStore } from "../stores/userStore"; // Import Pinia store
+import { useUserStore } from "../stores/userStore";
 import { useRouter } from "vue-router";
 
 export default {
@@ -57,29 +53,22 @@ export default {
   setup() {
     const email = ref("");
     const password = ref("");
-    const isSignUp = ref(false);
-
-    const userStore = useUserStore(); // Access Pinia store
-    const router = useRouter(); // Initialize router in setup
+    const userStore = useUserStore();
+    const router = useRouter();
 
     const handleSignIn = async () => {
       try {
-        const res = await signInWithEmailAndPassword(
-          auth,
-          email.value,
-          password.value
-        );
+        const res = await signInWithEmailAndPassword(auth, email.value, password.value);
         const user = res.user;
 
-        // Optionally fetch token
+        // Fetch token and user details from Firestore
         const token = await user.getIdToken();
-
-        // Fetch user details from Firestore
         const userDoc = await getDoc(doc(getFirestore(), "users", user.uid));
+
         if (userDoc.exists()) {
           const userData = userDoc.data();
 
-          // Save user details and token to Pinia
+          // Save user details and token to Pinia store
           userStore.setUser({
             uid: user.uid,
             email: user.email,
@@ -101,7 +90,6 @@ export default {
     return {
       email,
       password,
-      isSignUp,
       handleSignIn,
     };
   },

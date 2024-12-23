@@ -8,14 +8,16 @@
     ]"
     :style="{ backgroundColor }"
     :disabled="disabled"
-    @click="onClick"
+    @click="handleClick"
   >
     {{ label }}
   </button>
 </template>
 
 <script>
-export default {
+import { defineComponent, computed, toRefs } from 'vue';
+
+export default defineComponent({
   name: "MyButton",
   props: {
     label: {
@@ -40,26 +42,39 @@ export default {
       default: false,
     },
   },
-  computed: {
-    buttonStyles() {
-      return this.primary
-        ? "bg-blue-600 text-white hover:bg-blue-700"
-        : "bg-red-500 text-white hover:bg-red-600";
-    },
-    sizeClass() {
+  setup(props, { emit }) {
+    const { label, size, backgroundColor, primary, disabled } = toRefs(props);
+
+    const buttonStyles = computed(() => {
+      return primary.value 
+        ? 'bg-blue-600 text-white hover:bg-blue-700' 
+        : 'bg-red-500 text-white hover:bg-red-600';
+    });
+
+    const sizeClass = computed(() => {
       return {
-        small: "text-sm",
-        medium: "text-base",
-        large: "text-lg",
-      }[this.size];
-    },
+        small: 'text-sm',
+        medium: 'text-base',
+        large: 'text-lg',
+      }[size.value];
+    });
+
+    const handleClick = (event) => {
+      emit('onClick', event);
+    };
+
+    return {
+      label,
+      size,
+      backgroundColor,
+      primary,
+      disabled,
+      buttonStyles,
+      sizeClass,
+      handleClick
+    };
   },
-  methods: {
-    onClick(event) {
-      this.$emit("onClick", event);
-    },
-  },
-};
+});
 </script>
 
 <style scoped>

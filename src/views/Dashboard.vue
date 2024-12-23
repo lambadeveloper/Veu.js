@@ -53,11 +53,14 @@
 <script>
 import { useUserStore } from "../stores/userStore";
 import { useRouter } from "vue-router";
+import { computed } from "vue";
 
 export default {
   setup() {
     const userStore = useUserStore();
     const router = useRouter();
+
+    const user = computed(() => userStore.user);
 
     const logout = () => {
       userStore.logout();
@@ -65,7 +68,7 @@ export default {
     };
 
     return {
-      user: userStore.user,
+      user,
       logout,
     };
   },

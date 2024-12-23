@@ -48,23 +48,19 @@
 </template>
 
 <script>
-import { ref } from "vue";
-import { auth } from "../utils/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { ref } from 'vue';
+import { auth } from '../utils/firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default {
-  name: "SignInPage",
+  name: 'SignInPage',
   setup() {
-    const email = ref("");
-    const password = ref("");
+    const email = ref('');
+    const password = ref('');
 
     const handleSignIn = async () => {
       try {
-        const userCredential = await signInWithEmailAndPassword(
-          auth,
-          email.value,
-          password.value
-        );
+        const userCredential = await signInWithEmailAndPassword(auth, email.value, password.value);
         const user = userCredential.user;
         alert(`Welcome, ${user.email}!`);
       } catch (error) {
@@ -75,8 +71,8 @@ export default {
     return {
       email,
       password,
-      handleSignIn,
+      handleSignIn
     };
-  },
+  }
 };
 </script>

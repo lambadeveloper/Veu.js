@@ -5,9 +5,9 @@
       <form @submit.prevent="handleSignUp" class="space-y-4">
         <!-- Name Field -->
         <div>
-          <label for="name" class="block text-sm font-medium text-gray-600"
-            >Name</label
-          >
+          <label for="name" class="block text-sm font-medium text-gray-600">
+            Name
+          </label>
           <input
             id="name"
             v-model="name"
@@ -18,9 +18,9 @@
         </div>
         <!-- Phone Number Field -->
         <div>
-          <label for="phone" class="block text-sm font-medium text-gray-600"
-            >Phone Number</label
-          >
+          <label for="phone" class="block text-sm font-medium text-gray-600">
+            Phone Number
+          </label>
           <input
             id="phone"
             v-model="phone"
@@ -31,9 +31,9 @@
         </div>
         <!-- Email Field -->
         <div>
-          <label for="email" class="block text-sm font-medium text-gray-600"
-            >Email</label
-          >
+          <label for="email" class="block text-sm font-medium text-gray-600">
+            Email
+          </label>
           <input
             id="email"
             v-model="email"
@@ -44,9 +44,9 @@
         </div>
         <!-- Password Field -->
         <div>
-          <label for="password" class="block text-sm font-medium text-gray-600"
-            >Password</label
-          >
+          <label for="password" class="block text-sm font-medium text-gray-600">
+            Password
+          </label>
           <input
             id="password"
             v-model="password"
@@ -77,9 +77,9 @@
 import { ref } from "vue";
 import { auth } from "../utils/firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { getFirestore, doc, setDoc } from "firebase/firestore"; // Import Firestore
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 
-const db = getFirestore(); // Initialize Firestore
+const db = getFirestore();
 
 export default {
   name: "SignUpPage",
@@ -105,7 +105,7 @@ export default {
         await setDoc(doc(db, "users", user.uid), {
           name: name.value,
           phone: phone.value,
-          email: email.value, // Save email for convenience
+          email: email.value,
           createdAt: new Date(),
         });
 
@@ -131,3 +131,7 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+/* Add any component-specific styles here */
+</style>

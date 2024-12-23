@@ -10,7 +10,7 @@
         </h1>
         <button
           class="px-4 py-2 text-sm font-medium text-white transition-colors duration-150 ease-in-out bg-red-500 rounded-md hover:bg-red-600"
-          @click="onLogout"
+          @click="handleLogout"
         >
           Logout
         </button>
@@ -51,16 +51,18 @@
 </template>
 
 <script>
-export default {
-  name: "Dashboard",
+import { defineComponent, toRefs } from 'vue';
+
+export default defineComponent({
+  name: 'Dashboard',
   props: {
     user: {
       type: Object,
       required: true,
       default: () => ({
-        name: "John Doe",
-        email: "johndoe@example.com",
-        phone: "+1234567890",
+        name: 'John Doe',
+        email: 'johndoe@example.com',
+        phone: '+1234567890',
       }),
     },
     onLogout: {
@@ -68,7 +70,21 @@ export default {
       required: true,
     },
   },
-};
+  setup(props) {
+    const { user, onLogout } = toRefs(props);
+
+    const handleLogout = () => {
+      if (onLogout.value) {
+        onLogout.value();
+      }
+    };
+
+    return {
+      user,
+      handleLogout,
+    };
+  },
+});
 </script>
 
 <style scoped>
